@@ -1,3 +1,4 @@
+__all__ = ["levels", "players", "schemes", "teams"]
 from app.resources.base_resource import BaseResource
 from app.resources.levels_resource import levels
 from app.resources.players_resource import players

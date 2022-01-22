@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlmodel import select, Session
 
 from app.models import Auditor
+from app.responses import NotFoundException
 from app.responses import UniqueConstraintException
 from app.utils import to_dict
 
@@ -47,13 +48,13 @@ class BaseResource(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db.refresh(resource)
         return resource
 
-    def get_one(self, db: Session, id: int) -> Optional[ModelType]:
+    def get_one(self, db: Session, id: int) -> ModelType:
         """
         Obtain a single resource from the database.
         """
         resource = db.get(self.model, id)
         if resource == None:
-            return None
+            raise NotFoundException
         return resource
  
     def get_all(self, db: Session) -> List[ModelType]:
@@ -70,14 +71,14 @@ class BaseResource(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db: Session,
         id: int,
         data: Union[CreateSchemaType, dict]
-    ) -> Optional[ModelType]:
+    ) -> ModelType:
         """
         Update an existing resource in the database.
         """
         obj_in_data = to_dict(data)
         resource = db.get(self.model, id)
         if resource == None:
-            return None
+            raise NotFoundException
         for key, value in obj_in_data.items():
             setattr(resource, key, value)
         db.add(resource)
@@ -94,7 +95,7 @@ class BaseResource(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         resource = db.get(self.model, id)
         if resource == None:
-            return None
+            raise NotFoundException
         db.delete(resource)
         db.commit()
         return True

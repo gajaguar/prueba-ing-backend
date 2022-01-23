@@ -1,4 +1,6 @@
-from sqlmodel import Session
+from typing import List
+
+from sqlmodel import select, Session
 
 from app.models import Player
 from app.resources.base_resource import BaseResource
@@ -56,6 +58,20 @@ class PlayersResource(BaseResource[Player, PlayerCreate, PlayerUpdate]):
         bonus_salary = self.get_bonus_salary(db, id)
         updated_player = insert_integrated_salary(player, bonus_salary)
         return updated_player
+
+    def get_all(self, db: Session) -> List[Player]:
+        """
+        Obtain all players from the database with integrated salary calculated.
+        """
+        statement = select(self.model)
+        result = db.exec(statement)
+        players = result.all()
+        updated_players = []
+        for player in players:
+            bonus_salary = self.get_bonus_salary(db, player.player_id)
+            updated_player = insert_integrated_salary(player, bonus_salary)
+            updated_players.append(updated_player)
+        return updated_players
  
 
 players = PlayersResource(Player)

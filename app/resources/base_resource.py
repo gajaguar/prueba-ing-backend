@@ -1,4 +1,4 @@
-from typing import Generic, List, Optional, Type, TypeVar, Union
+from typing import Generic, List, Type, TypeVar, Union
 
 from pydantic import BaseModel
 from sqlalchemy.exc import IntegrityError

@@ -53,6 +53,7 @@ class Level(Auditor, table=True):
             unique=True,
         )
     )
+    level_goals: int = Field(..., ge=0)
     scheme: Optional["Scheme"] = Relationship(back_populates="levels")
     players: List["Player"] = Relationship(back_populates="level")
 

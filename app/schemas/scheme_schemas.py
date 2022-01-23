@@ -41,7 +41,7 @@ class Scheme(SchemeBase):
     """
     Class containing properties to retrieve a scheme to the client.
     """
-    scheme: int = Field(
+    scheme_id: int = Field(
         ...,
         gt=0,
         title="Scheme ID",

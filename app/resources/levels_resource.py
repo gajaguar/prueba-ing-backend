@@ -5,7 +5,7 @@ from app.schemas import LevelCreate, LevelUpdate
 
 class LevelsResource(BaseResource[Level, LevelCreate, LevelUpdate]):
     """
-    Class representing a roles resource.
+    Class representing a levels resource.
     """
     pass
 

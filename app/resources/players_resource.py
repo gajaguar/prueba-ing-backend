@@ -6,7 +6,7 @@ from app.resources.teams_resource import teams
 from app.responses import NotFoundException
 from app.schemas import PlayerCreate, PlayerUpdate
 from app.utils import calculate_bonus
-from app.utils import get_ratio
+from app.utils import evaluate_goals_ratio
 
 
 class PlayersResource(BaseResource[Player, PlayerCreate, PlayerUpdate]):
@@ -22,11 +22,11 @@ class PlayersResource(BaseResource[Player, PlayerCreate, PlayerUpdate]):
             raise NotFoundException
         reached_goals = player.player_goals
         required_goals = player.level.level_goals
-        if reached_goals >= required_goals:
-            return 1
-        else:
-            individual_goals_ratio = get_ratio(reached_goals, required_goals)
-            return individual_goals_ratio
+        individual_goals_ratio = evaluate_goals_ratio(
+            reached_goals,
+            required_goals,
+        )
+        return individual_goals_ratio
 
     def get_bonus_salary(self, db: Session, id: int) -> int:
         """
@@ -40,7 +40,7 @@ class PlayersResource(BaseResource[Player, PlayerCreate, PlayerUpdate]):
         calculated_bonus = calculate_bonus(
             player.player_bonus_salary,
             individual_goals_ratio,
-            team_goals_ratio
+            team_goals_ratio,
         )
         return calculated_bonus
 

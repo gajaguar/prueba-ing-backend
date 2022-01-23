@@ -4,7 +4,7 @@ from app.models import Team
 from app.resources.base_resource import BaseResource
 from app.responses import NotFoundException
 from app.schemas import TeamCreate, TeamUpdate
-from app.utils import get_ratio
+from app.utils import evaluate_goals_ratio
 
 
 class TeamsResource(BaseResource[Team, TeamCreate, TeamUpdate]):
@@ -24,11 +24,11 @@ class TeamsResource(BaseResource[Team, TeamCreate, TeamUpdate]):
         for player in players:
             reached_goals += player.player_goals
             required_goals += player.level.level_goals
-        if reached_goals >= required_goals:
-            return 1
-        else:
-            team_goals_ratio = get_ratio(reached_goals, required_goals)
-            return team_goals_ratio
+        team_goals_ratio = evaluate_goals_ratio(
+            reached_goals,
+            required_goals,
+        )
+        return team_goals_ratio
 
 
 teams = TeamsResource(Team)

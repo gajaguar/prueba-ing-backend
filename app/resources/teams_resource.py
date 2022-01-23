@@ -5,7 +5,7 @@ from app.schemas import TeamCreate, TeamUpdate
 
 class TeamsResource(BaseResource[Team, TeamCreate, TeamUpdate]):
     """
-    Class representing a roles resource.
+    Class representing a teams resource.
     """
     pass
 

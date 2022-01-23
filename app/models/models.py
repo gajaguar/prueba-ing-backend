@@ -89,7 +89,7 @@ class Player(Auditor, table=True):
             unique=True,
         )
     )
-    player_goals: int = Field(..., gt=0)
+    player_goals: int = Field(..., ge=0)
     player_base_salary: int = Field(..., gt=0)
     player_bonus_salary: int = Field(..., gt=0)
     player_integrated_salary: Optional[int] = Field(default=None)

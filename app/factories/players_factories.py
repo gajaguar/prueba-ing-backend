@@ -13,25 +13,17 @@ class RandomPlayerFactory(factory.Factory):
         model = Player
 
 
-    level_id: int = factory.Faker(
-        "pyint",
-        min_value=1,
-        max_value=settings.DB_POPULATION
+    level_id = factory.Faker(
+        "random_int",
+        min=1,
+        max=settings.DB_POPULATION
     )
-    team_id: int = factory.Faker(
-        "pyint",
-        min_value=1,
-        max_value=settings.DB_POPULATION
+    team_id = factory.Faker(
+        "random_int",
+        min=1,
+        max=settings.DB_POPULATION
     )
-    player_name: str = factory.Faker("name")
-    player_goals: int = factory.Faker("pyint", min_value=0, max_value=30)
-    player_base_salary: int = factory.Faker(
-        "pyint",
-        min_value=1,
-        max_value=10
-    ) * 10000
-    player_bonus_salary: int = factory.Faker(
-        "pyint",
-        min_value=1,
-        max_value=10
-    ) * 1000
+    player_name = factory.Faker("name")
+    player_goals = factory.Faker("random_int", min=0, max=30)
+    player_base_salary = factory.Faker("random_int", min=10000, max=100000)
+    player_bonus_salary = factory.Faker("random_int", min=1000, max=10000)

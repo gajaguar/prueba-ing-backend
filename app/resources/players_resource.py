@@ -7,6 +7,7 @@ from app.responses import NotFoundException
 from app.schemas import PlayerCreate, PlayerUpdate
 from app.utils import calculate_bonus
 from app.utils import evaluate_goals_ratio
+from app.utils import insert_integrated_salary
 
 
 class PlayersResource(BaseResource[Player, PlayerCreate, PlayerUpdate]):
@@ -53,9 +54,8 @@ class PlayersResource(BaseResource[Player, PlayerCreate, PlayerUpdate]):
         if player == None:
             raise NotFoundException
         bonus_salary = self.get_bonus_salary(db, id)
-        integrated_salary = player.player_base_salary + bonus_salary
-        player.player_integrated_salary = integrated_salary
-        return player
+        updated_player = insert_integrated_salary(player, bonus_salary)
+        return updated_player
  
 
 players = PlayersResource(Player)

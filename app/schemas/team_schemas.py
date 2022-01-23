@@ -41,7 +41,7 @@ class Team(TeamBase):
     """
     Class containing properties to retrieve a team to the client.
     """
-    team: int = Field(
+    team_id: int = Field(
         ...,
         gt=0,
         title="Team ID",

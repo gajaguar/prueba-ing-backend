@@ -63,8 +63,8 @@ class BaseResource(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         statement = select(self.model)
         result = db.exec(statement)
-        users = result.all()
-        return users
+        resources = result.all()
+        return resources
 
     def update(
         self,

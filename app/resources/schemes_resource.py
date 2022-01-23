@@ -5,7 +5,7 @@ from app.schemas import SchemeCreate, SchemeUpdate
 
 class SchemesResource(BaseResource[Scheme, SchemeCreate, SchemeUpdate]):
     """
-    Class representing a roles resource.
+    Class representing a schemes resource.
     """
     pass
 

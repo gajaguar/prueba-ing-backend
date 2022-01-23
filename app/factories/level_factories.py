@@ -19,3 +19,4 @@ class RandomLevelFactory(factory.Factory):
         max_value=settings.DB_POPULATION
     )
     level_name = factory.Faker("word")
+    level_goals = factory.Faker("random_int", min=0, max=30)

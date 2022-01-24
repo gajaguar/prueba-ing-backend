@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -57,6 +57,13 @@ class PlayerCreate(PlayerBase):
     Class containing properties to create a new player.
     """
     pass
+
+
+class PlayerCreateBatch(BaseModel):
+    """
+    Class containing properties to create a new player.
+    """
+    players: List[PlayerCreate] = Field(...)
 
 
 class PlayerUpdate(PlayerBase):

@@ -6,7 +6,7 @@ from app.models import Player
 from app.resources.base_resource import BaseResource
 from app.resources.teams_resource import teams
 from app.responses import NotFoundException
-from app.schemas import PlayerCreate, PlayerUpdate
+from app.schemas import PlayerCreate,PlayerCreateBatch, PlayerUpdate
 from app.utils import calculate_bonus
 from app.utils import evaluate_goals_ratio
 from app.utils import insert_integrated_salary
@@ -16,6 +16,20 @@ class PlayersResource(BaseResource[Player, PlayerCreate, PlayerUpdate]):
     """
     Class representing a players resource.
     """
+    def create_by_batch(
+        self,
+        db: Session,
+        players: PlayerCreateBatch,
+    ) -> List[Player]:
+        """
+        Create multiple players in the database.
+        """
+        created_players = []
+        for player in players.players:
+            created_player = self.create(db, player)
+            created_players.append(created_player)
+        return created_players
+
     def get_individual_goals_ratio(self, db: Session, id: int) -> float:
         """
         Obtain the individual goals ratio of a player.
